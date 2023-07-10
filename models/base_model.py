@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 import uuid
 from datetime import datetime
 
@@ -10,8 +9,8 @@ class BaseModel:
 
     Attributes:
         id (str): Unique identifier for the instance.
-        created_at (datetime): Date and time when the instance was created.
-        updated_at (datetime): Date and time when the instance was last updated.
+        created_at (datetime): Date & time when the instance was created.
+        updated_at (datetime): Date & time when the instance was last updated.
     """
 
     def __init__(self):
@@ -19,7 +18,7 @@ class BaseModel:
         Initializes a new instance of BaseModel.
 
         The id is set to a unique identifier generated using UUID.
-        The created_at and updated_at attributes are set to the current date and time.
+        The created_at & updated_at attributes are set to current date & time.
         """
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
@@ -33,7 +32,7 @@ class BaseModel:
             str: String representation of the instance in the format:
                 "[ClassName] (id) additional_info"
         """
-        return "[{}] ({})".format(self.__class__.__name__, self.id)
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
         """
@@ -47,8 +46,9 @@ class BaseModel:
         """
         Returns a dictionary representation of the BaseModel instance.
 
-        The dictionary contains all the attributes of the instance, including the class name,
-        id, created_at, and updated_at converted to ISO 8601 format.
+        The dictionary contains all the attributes of the instance,
+        including the class name, id, created_at, and updated_at converted
+        to ISO 8601 format.
 
         Returns:
             dict: Dictionary representation of the instance.
