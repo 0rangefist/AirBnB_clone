@@ -4,6 +4,7 @@ This module defines the BaseModel class
 """
 import uuid
 from datetime import datetime
+import models
 
 
 class BaseModel:
@@ -39,6 +40,9 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
 
+            # save the new instance to storage
+            models.storage.new(self)
+
     def __str__(self):
         """
         Returns a string representation of the BaseModel instance.
@@ -51,11 +55,17 @@ class BaseModel:
 
     def save(self):
         """
-        Updates the updated_at attribute with the current date and time.
+        Updates the updated_at attribute with the current date and time
+        & saves it to storage
 
         This method is called to mark when an instance is updated.
         """
+
+        # save the time of update
         self.updated_at = datetime.now()
+
+        # save the object to storage
+        models.storage.save()
 
     def to_dict(self):
         """
