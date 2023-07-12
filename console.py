@@ -132,7 +132,11 @@ class HBNBCommand(cmd.Cmd):
         elif len(line) == 1:
             print("** instance id missing **")
         elif len(line) == 2:
-            print("** attribute name missing **")
+            instance_key = f'{line[0]}.{line[1]}'
+            if instance_key not in storage.all():
+                print("** no instance found **")
+            else:
+                print("** attribute name missing **")
         elif len(line) == 3:
             print("** value missing **")
         else:
