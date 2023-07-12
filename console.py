@@ -16,6 +16,7 @@ from models.review import Review
 
 classes = ["BaseModel", "User", "State", "City", "Place", "Amenity", "Review"]
 
+
 class HBNBCommand(cmd.Cmd):
     """ The HBNBCommand class """
     prompt = "(hbnb) "
@@ -36,14 +37,14 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, line):
-        """Creates a new instance of BaseModel, saves it(to the Json file
+        """Creates a new instance of a class, saves it to storage
         and prints the id
         """
         line = line.split()
         if len(line) == 0:
             print("** class name missing **")
         elif line[0] not in classes:
-            print("** classes doesn't exist **")
+            print("** class doesn't exist **")
         else:
             instance = eval(line[0])()
             instance.save()
@@ -55,7 +56,7 @@ class HBNBCommand(cmd.Cmd):
         """
         line = line.split()
         if len(line) == 0:
-            print("**class name missing **")
+            print("** class name missing **")
         elif line[0] not in classes:
             print("** class doesn't exist **")
         elif len(line) == 1:
@@ -82,7 +83,7 @@ class HBNBCommand(cmd.Cmd):
             if instance_key not in storage.all():
                 print("** no instance found **")
             else:
-                del(storage.all()[instance_key])
+                del storage.all()[instance_key]
                 storage.save()
 
     def do_all(self, line):
@@ -91,14 +92,33 @@ class HBNBCommand(cmd.Cmd):
         """
         line = line.split()
         if len(line) == 0:
-            for obj in storage.all().values():
-                print(obj)
+            # print all objects in storage
+            if len(storage.all()) > 0:
+                print("[", end="")
+                for index, obj in enumerate(storage.all().values()):
+                    print('"', end="")
+                    print(obj, end="")
+                    print('"', end="")
+                    if index != len(storage.all()) - 1:
+                        print(", ", end="")
+                print("]")
         elif line[0] not in classes:
             print("** class doesn't exist **")
         else:
+            # print objects of a particular class in storage
+            objects = []
             for key in storage.all():
                 if key.startswith(line[0]):
-                    print(storage.all()[key])
+                    objects.append(storage.all()[key])
+            if len(objects) > 0:
+                print("[", end="")
+                for index, obj in enumerate(objects):
+                    print('"', end="")
+                    print(obj, end="")
+                    print('"', end="")
+                    if index != len(objects) - 1:
+                        print(", ", end="")
+                print("]")
 
     def do_update(self, line):
         """Updates an instance based on the class name and id
@@ -121,14 +141,12 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
             else:
                 obj = storage.all()[instance_key]
-                if len(line) < 5:
-                    print("** attribute name missing **")
-                else:
-                    try:
-                        setattr(obj, line[2], eval(line[3]))
-                    except NameError:
-                        setattr(obj, line[2], line[3])
-                    obj.save()
+                try:
+                    setattr(obj, line[2], eval(line[3]))
+                except NameError:
+                    setattr(obj, line[2], line[3])
+                obj.save()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
