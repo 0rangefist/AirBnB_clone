@@ -4,6 +4,7 @@ This module defines HBNBCommand, the entry
 point of the command interpreter
 """
 import cmd
+import re
 from models.base_model import BaseModel
 from models import storage
 from models.user import BaseModel
@@ -20,6 +21,28 @@ classes = ["BaseModel", "User", "State", "City", "Place", "Amenity", "Review"]
 class HBNBCommand(cmd.Cmd):
     """ The HBNBCommand class """
     prompt = "(hbnb) "
+
+    def parse_command(self, line):
+        tokens = line.strip().split(".")
+        if len(tokens) == 2:
+            class_name = tokens[0]
+            command = tokens[1]
+            if re.match(r"^all\(\)$", command):
+                command = "all"
+                arguments = class_name
+                return command, arguments
+        return None, None
+
+    def default(self, line):
+        command, arguments = self.parse_command(line)
+        if command == "all":
+            self.do_all(arguments)
+        elif command == "create":
+            self.do_create(arguments)
+        elif command == "update":
+            self.do_update(arguments)
+        else:
+            super().default(line)
 
     def do_quit(self, line):
         """quit command exits the program
