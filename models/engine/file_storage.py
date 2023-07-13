@@ -21,7 +21,7 @@ class FileStorage:
     """
 
     # path to the JSON file
-    __file_path = "file.json"
+    __file_path = "object_instances.json"
 
     #  store all objects by <class name>.id
     __objects = {}
