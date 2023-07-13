@@ -7,7 +7,6 @@ import cmd
 import re
 from models.base_model import BaseModel
 from models import storage
-from models.user import BaseModel
 from models.user import User
 from models.state import State
 from models.city import City
@@ -22,15 +21,30 @@ class HBNBCommand(cmd.Cmd):
     """ The HBNBCommand class """
     prompt = "(hbnb) "
 
-    def parse_command(self, line):
+    def parse_input(self, line):
+        """
+        Handles processing for alternate syntaxes <class name>.<command>()
+
+        Receives any input that isn't recognized as a standard command,
+        determines if it's an alternate syntax command & re-formats it
+        into standard command syntax
+        """
+
+        # tokenize the input using "." as the delimeter
         tokens = line.strip().split(".")
+
+        # continue with processing if exactly 2 tokens are produced
         if len(tokens) == 2:
             class_name = tokens[0]
             command = tokens[1]
+
+            # retrieve all instances of a class using: <class name>.all()
             if re.match(r"^all\(\)$", command):
                 command = "all"
                 arguments = class_name
                 return command, arguments
+
+            # retrieve the number of instances of a class: <class name>.count()
             elif re.match(r"^count\(\)$", command):
                 if class_name not in classes:
                     command = "error"
@@ -43,21 +57,36 @@ class HBNBCommand(cmd.Cmd):
                     command = "count"
                     arguments = count
                 return command, arguments
+
+            # retrieve an instance based on its ID: <class name>.show(<id>)
+            elif match := re.match(r'show\("([^"]*)"\)', command):
+                id = match.group(1)  # get id from capture-group 1 ([^"\s]*)
+                command = "show"
+                arguments = class_name + " " + id
+                return command, arguments
         return None, None
 
     def default(self, line):
-        command, arguments = self.parse_command(line)
+        """
+        Handles input that isn't recognised by any of the do_ methods
+
+        These unrecognised commands could either be alternate syntax
+        of standard commands or they could truly be invalid/uknown
+        """
+
+        # parse the input to determine if it is an alternate syntax
+        command, arguments = self.parse_input(line)
         if command == "all":
             self.do_all(arguments)
         elif command == "count":
             print(arguments)
-        elif command == "create":
-            self.do_create(arguments)
+        elif command == "show":
+            self.do_show(arguments)
         elif command == "update":
             self.do_update(arguments)
         elif command == "error":
             print(arguments)
-        else:
+        else:  # not an alternate syntax (ie. it's an uknown syntax)
             super().default(line)
 
     def do_quit(self, line):
