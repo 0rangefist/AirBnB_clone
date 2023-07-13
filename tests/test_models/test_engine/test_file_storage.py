@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-"""Defines unittests for models/engine/file_storage.py.
 
+"""Defines unittests for models/engine/file_storage.py.
 Unittest classes:
     TestFileStorage_instantiation
     TestFileStorage_methods
@@ -22,23 +22,29 @@ from models.review import Review
 
 
 class TestFileStorage_instantiation(unittest.TestCase):
-    """Unittests for testing instantiation of the FileStorage class."""
+    """Unittests for testing instantiation of the FileStorage class.
+    """
 
     def test_FileStorage_instantiation_no_args(self):
-        """Test that FileStorage instance is created with no arguments."""
+        """Test that FileStorage instance is created with no arguments.
+        """
         self.assertEqual(type(FileStorage()), FileStorage)
 
     def test_FileStorage_instantiation_with_arg(self):
-        """Test that FileStorage raises TypeError when instantiated with an argument."""
+        """Test that FileStorage raises TypeError when instantiated
+        with an argument.
+        """
         with self.assertRaises(TypeError):
             FileStorage(None)
 
     def test_FileStorage_file_path_is_private_str(self):
-        """Test that __file_path attribute of FileStorage is a private string."""
+        """Test that __file_path attribute of FileStorage is a private string.
+        """
         self.assertEqual(str, type(FileStorage._FileStorage__file_path))
 
     def testFileStorage_objects_is_private_dict(self):
-        """Test that __objects attribute of FileStorage is a private dictionary."""
+        """Test that __objects attribute of FileStorage is a private dictionary
+        """
         self.assertEqual(dict, type(FileStorage._FileStorage__objects))
 
     def test_storage_initializes(self):
@@ -51,7 +57,9 @@ class TestFileStorage_methods(unittest.TestCase):
 
     @classmethod
     def setUp(self):
-        """Set up the test environment by renaming the file.json to tmp (if it exists)."""
+        """Set up the test environment by renaming the file.json to
+        tmp (if it exists)
+        """
         try:
             os.rename("object_instances.json", "tmp")
         except IOError:
@@ -59,7 +67,9 @@ class TestFileStorage_methods(unittest.TestCase):
 
     @classmethod
     def tearDown(self):
-        """Clean up the test environment by removing file.json (if it exists) and renaming tmp to file.json."""
+        """Clean up the test environment by removing file.json (if it exists)
+        and renaming tmp to file.json.
+        """
         try:
             os.remove("object_instances.json")
         except IOError:
@@ -75,7 +85,8 @@ class TestFileStorage_methods(unittest.TestCase):
         self.assertEqual(dict, type(models.storage.all()))
 
     def test_all_with_arg(self):
-        """Test that all() method raises TypeError when called with an argument."""
+        """Test that all() method raises TypeError when called with an argument
+        """
         with self.assertRaises(TypeError):
             models.storage.all(None)
 
@@ -111,12 +122,15 @@ class TestFileStorage_methods(unittest.TestCase):
         self.assertIn(rv, models.storage.all().values())
 
     def test_new_with_args(self):
-        """Test that new() method raises TypeError when called with multiple arguments."""
+        """Test that new() method raises TypeError when called with
+        multiple arguments
+        """
         with self.assertRaises(TypeError):
             models.storage.new(BaseModel(), 1)
 
     def test_new_with_None(self):
-        """Test that new() method raises AttributeError when called with None."""
+        """Test that new() method raises AttributeError when called with None
+        """
         with self.assertRaises(AttributeError):
             models.storage.new(None)
 
@@ -149,7 +163,9 @@ class TestFileStorage_methods(unittest.TestCase):
             self.assertIn("Review." + rv.id, save_text)
 
     def test_save_with_arg(self):
-        """Test that save() method raises TypeError when called with an argument."""
+        """Test that save() method raises TypeError when
+        called with an argument
+        """
         with self.assertRaises(TypeError):
             models.storage.save(None)
 
@@ -181,14 +197,17 @@ class TestFileStorage_methods(unittest.TestCase):
         self.assertIn("Review." + rv.id, objs)
 
     def test_reload_no_file(self):
-        """Test that reload() method raises FileNotFoundError when object.json is not found."""
+        """Test that reload() method raises FileNotFoundError
+        when object.json is not found
+        """
 
     def test_reload_with_arg(self):
-        """Test that reload() method raises TypeError when called with an argument."""
+        """Test that reload() method raises TypeError
+        when called with an argument
+        """
         with self.assertRaises(TypeError):
             models.storage.reload(None)
 
 
 if __name__ == "__main__":
     unittest.main()
-
