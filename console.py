@@ -31,16 +31,32 @@ class HBNBCommand(cmd.Cmd):
                 command = "all"
                 arguments = class_name
                 return command, arguments
+            elif re.match(r"^count\(\)$", command):
+                if class_name not in classes:
+                    command = "error"
+                    arguments = "** class doesn't exist **"
+                else:
+                    count = 0
+                    for key in storage.all():
+                        if class_name in key:
+                            count = count + 1
+                    command = "count"
+                    arguments = count
+                return command, arguments
         return None, None
 
     def default(self, line):
         command, arguments = self.parse_command(line)
         if command == "all":
             self.do_all(arguments)
+        elif command == "count":
+            print(arguments)
         elif command == "create":
             self.do_create(arguments)
         elif command == "update":
             self.do_update(arguments)
+        elif command == "error":
+            print(arguments)
         else:
             super().default(line)
 
