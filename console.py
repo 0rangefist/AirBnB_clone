@@ -60,8 +60,15 @@ class HBNBCommand(cmd.Cmd):
 
             # retrieve an instance based on its ID: <class name>.show(<id>)
             elif match := re.match(r'show\("([^"]*)"\)', command):
-                id = match.group(1)  # get id from capture-group 1 ([^"\s]*)
+                id = match.group(1)  # get id from capture-group 1 ([^"]*)
                 command = "show"
+                arguments = class_name + " " + id
+                return command, arguments
+            
+            # destroy an instance based on its ID: <class name>.destroy(<id>)
+            elif match := re.match(r'destroy\("([^"]*)"\)', command):
+                id = match.group(1)  # get id from capture-group 1 ([^"]*)
+                command = "destroy"
                 arguments = class_name + " " + id
                 return command, arguments
         return None, None
@@ -82,8 +89,8 @@ class HBNBCommand(cmd.Cmd):
             print(arguments)
         elif command == "show":
             self.do_show(arguments)
-        elif command == "update":
-            self.do_update(arguments)
+        elif command == "destroy":
+            self.do_destroy(arguments)
         elif command == "error":
             print(arguments)
         else:  # not an alternate syntax (ie. it's an uknown syntax)
