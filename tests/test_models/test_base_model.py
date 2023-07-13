@@ -68,7 +68,8 @@ class TestBaseModelInit(unittest.TestCase):
         self.assertTrue(hasattr(model, "some_attribute"))
 
     def test_kwargs_with_ignored_args_creates_instance(self):
-        # Test that args are ignored and kwargs are correctly used to create an instance
+        # Test that args are ignored and kwargs are correctly
+        # used to create an instance
         model_dict = {
             "id": "some_id",
             "created_at": datetime.now().isoformat(),

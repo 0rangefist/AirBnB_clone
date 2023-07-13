@@ -64,13 +64,41 @@ class HBNBCommand(cmd.Cmd):
                 command = "show"
                 arguments = class_name + " " + id
                 return command, arguments
-            
+
             # destroy an instance based on its ID: <class name>.destroy(<id>)
             elif match := re.match(r'destroy\("([^"]*)"\)', command):
                 id = match.group(1)  # get id from capture-group 1 ([^"]*)
                 command = "destroy"
                 arguments = class_name + " " + id
                 return command, arguments
+
+            # update an instance based on it's ID:
+            # <class name>.update(<id>, <attribute name>, <attribute value>)
+            elif command.startswith("update"):
+                pattern = (r'update'
+                           + r'\(\s*"([^"]*)",'  # capture group 1
+                           + r'\s*"([^"]*)",'  # capture group 2
+                           + r'\s*("[^"]*")\s*\)'  # capture group 3
+                           )
+                if match := re.match(pattern, command):
+                    id = match.group(1)  # grab from capture-group 1 ([^"]*)
+                    attr_name = match.group(2)  # grab from capture-group 2
+                    value = match.group(3)  # grab from capture-group 3
+
+                    command = "update"
+                    arguments = ""
+
+                    # construct the arguments string sequentially and
+                    # stop constructing once an empty substring is met
+                    if class_name:
+                        arguments += class_name
+                    if class_name and id:
+                        arguments += " " + id
+                    if class_name and id and attr_name:
+                        arguments += " " + attr_name
+                    if class_name and id and attr_name and value:
+                        arguments += " " + value
+                    return command, arguments
         return None, None
 
     def default(self, line):
@@ -91,6 +119,8 @@ class HBNBCommand(cmd.Cmd):
             self.do_show(arguments)
         elif command == "destroy":
             self.do_destroy(arguments)
+        elif command == "update":
+            self.do_update(arguments)
         elif command == "error":
             print(arguments)
         else:  # not an alternate syntax (ie. it's an uknown syntax)
@@ -199,31 +229,64 @@ class HBNBCommand(cmd.Cmd):
         """Updates an instance based on the class name and id
         by adding or updating attribute
         """
-        line = line.split()
-        if len(line) == 0:
+        # A token is either text delimited by whitespace
+        # or an text between double quotes ie. "my expression"
+
+        # Define the regular expression pattern for the token
+        pattern = r'"[^"]*"|\S+'
+        # Extract the tokens using the pattern
+        tokens = re.findall(pattern, line)
+        # Remove any surrounding quotes & whitespaces from tokens
+        tokens = [token.strip('"').strip() for token in tokens]
+
+        num_of_args = len(tokens)
+        # DEBUG: print(f"num or args: {num_of_args}")
+
+        # tokens[0] : classname
+        # tokens[1] : id
+        # tokens[2] : attribute name
+        # tokens[3] : value
+
+        # if no arguments entered at all
+        if num_of_args == 0:
             print("** class name missing **")
-        elif line[0] not in classes:
+
+        # if some arguments entered but 1st one(classname) is invalid
+        elif num_of_args > 0 and tokens[0] not in classes:
             print("** class doesn't exist **")
-        elif len(line) == 1:
+
+        # if id isn't entered or is entered but is an empty string
+        elif num_of_args == 1 or (num_of_args > 1 and not tokens[1]):
             print("** instance id missing **")
-        elif len(line) == 2:
-            instance_key = f'{line[0]}.{line[1]}'
+
+        elif num_of_args > 1:
+            class_name = tokens[0]
+            id = tokens[1]
+            instance_key = f'{class_name}.{id}'
+
+            # if the id is entered but doesnt exist in the storage
             if instance_key not in storage.all():
                 print("** no instance found **")
-            else:
+
+            # if attr name not entered or is entered but is empty string
+            elif num_of_args == 2 or (num_of_args > 2 and not tokens[2]):
                 print("** attribute name missing **")
-        elif len(line) == 3:
-            print("** value missing **")
-        else:
-            instance_key = f'{line[0]}.{line[1]}'
-            if instance_key not in storage.all():
-                print("** no instance found **")
+
+            # if value not entered or is entered but is empty string
+            # or a string of double quotes with arbitrary whitespace
+            elif num_of_args == 3 or (num_of_args > 3 and not tokens[3]):
+                print("** value missing **")
+
+            # else go ahead and update
             else:
+                attr_name = tokens[2]
+                value = tokens[3]
                 obj = storage.all()[instance_key]
                 try:
-                    setattr(obj, line[2], eval(line[3]))
-                except NameError:
-                    setattr(obj, line[2], line[3])
+                    setattr(obj, attr_name, eval(value))
+                except Exception:
+                    # fallback in-case eval fails
+                    setattr(obj, attr_name, value)
                 obj.save()
 
 
