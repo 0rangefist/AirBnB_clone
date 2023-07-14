@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# This checks all .py files in this directory and all it's sub-directories
+# to determine if they meet pycodestyle requirements.
+# Output is only printed for files that fail
+
+find . -name "*.py" -type f -print0  | xargs -0 pycodestyle
