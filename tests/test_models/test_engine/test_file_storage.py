@@ -57,7 +57,7 @@ class TestFileStorage_methods(unittest.TestCase):
 
     @classmethod
     def setUp(self):
-        """Set up the test environment by renaming the file.json to
+        """Set up the test environment by renaming the .json to
         tmp (if it exists)
         """
         try:
@@ -67,8 +67,8 @@ class TestFileStorage_methods(unittest.TestCase):
 
     @classmethod
     def tearDown(self):
-        """Clean up the test environment by removing file.json (if it exists)
-        and renaming tmp to file.json.
+        """Clean up the test environment by removing .json (if it exists)
+        and renaming tmp to object_instances.json.
         """
         try:
             os.remove("object_instances.json")
