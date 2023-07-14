@@ -75,12 +75,23 @@ class HBNBCommand(cmd.Cmd):
             # update an instance based on it's ID:
             # <class name>.update(<id>, <attribute name>, <attribute value>)
             elif command.startswith("update"):
-                pattern = (r'update'
-                           + r'\(\s*"([^"]*)",'  # capture group 1
-                           + r'\s*"([^"]*)",'  # capture group 2
-                           + r'\s*("[^"]*")\s*\)'  # capture group 3
-                           )
-                if match := re.match(pattern, command):
+                # if the class is invalid
+                if class_name not in classes:
+                    command = "error"
+                    arguments = "** class doesn't exist **"
+                    return command, arguments
+
+                pattern1 = (r'update'
+                            + r'\(\s*"([^"]*)",'  # capture group 1 - string
+                            + r'\s*"([^"]*)",'  # capture group 2 - string
+                            + r'\s*("[^"]*")\s*\)'  # capture group 3 - string
+                            )
+                pattern2 = (r'update'
+                            + r'\(\s*"([^"]*)",'  # capture group 1 - string
+                            + r'\s*(\{.*\}\s*)'  # capture group 2 - dict/set
+                            )
+
+                if match := re.match(pattern1, command):
                     id = match.group(1)  # grab from capture-group 1 ([^"]*)
                     attr_name = match.group(2)  # grab from capture-group 2
                     value = match.group(3)  # grab from capture-group 3
@@ -99,6 +110,56 @@ class HBNBCommand(cmd.Cmd):
                     if class_name and id and attr_name and value:
                         arguments += " " + value
                     return command, arguments
+
+                elif match := re.match(pattern2, command):
+                    # DEBUG: print("match pattern 2")
+                    id = match.group(1)  # grab from capture-group 1 ([^"]*)
+                    dict_rep = match.group(2)  # grab from capture-group 2
+                    instance_key = f"{class_name}.{id}"
+
+                    # if the instace doesn't exist
+                    if instance_key not in storage.all():
+                        command = "error"
+                        arguments = "** no instance found **"
+                        return command, arguments
+
+                    # try to convert the grabbed dict_rep into a dictionary,
+                    # if it is a valid representation, it should be successful
+                    try:
+                        dictionary = eval(dict_rep)
+                        if isinstance(dictionary, dict):
+                            command = "update_from_dictionary"
+                            arguments = []
+
+                            """ # if the dictionary is empty, produce an
+                            # "attribute name missing" error
+                            if len(dictionary) == 0:
+                                command = "error"
+                                arguments = "** attribute name missing **"
+                                return command, arguments """
+
+                            # construct a list of Update command arguments in
+                            # the format: <classname> <id> <attr name> <value>
+                            for attr_name, value in dictionary.items():
+
+                                # if the attribute name is empty
+                                if str(attr_name).strip() == "":
+                                    command = "error"
+                                    arguments = "** attribute name missing **"
+                                    return command, arguments
+
+                                # if the value is empty
+                                if str(value).strip() == "":
+                                    command = "error"
+                                    arguments = "** value missing **"
+                                    return command, arguments
+
+                                arg = f"{class_name} {id} {attr_name} {value}"
+                                arguments.append(arg)
+
+                            return command, arguments
+                    except Exception:
+                        pass
         return None, None
 
     def default(self, line):
@@ -121,6 +182,9 @@ class HBNBCommand(cmd.Cmd):
             self.do_destroy(arguments)
         elif command == "update":
             self.do_update(arguments)
+        elif command == "update_from_dictionary":
+            for arg in arguments:
+                self.do_update(arg)
         elif command == "error":
             print(arguments)
         else:  # not an alternate syntax (ie. it's an uknown syntax)
@@ -232,9 +296,9 @@ class HBNBCommand(cmd.Cmd):
         # A token is either text delimited by whitespace
         # or an text between double quotes ie. "my expression"
 
-        # Define the regular expression pattern for the token
+        # Define the regular expression for extracting tokens
         pattern = r'"[^"]*"|\S+'
-        # Extract the tokens using the pattern
+        # Create the tokens using the pattern
         tokens = re.findall(pattern, line)
         # Remove any surrounding quotes & whitespaces from tokens
         tokens = [token.strip('"').strip() for token in tokens]
@@ -242,10 +306,8 @@ class HBNBCommand(cmd.Cmd):
         num_of_args = len(tokens)
         # DEBUG: print(f"num or args: {num_of_args}")
 
-        # tokens[0] : classname
-        # tokens[1] : id
-        # tokens[2] : attribute name
-        # tokens[3] : value
+        # tokens[0]: classname         tokens[1]: id
+        # tokens[2]: attribute name    tokens[3]: value
 
         # if no arguments entered at all
         if num_of_args == 0:
