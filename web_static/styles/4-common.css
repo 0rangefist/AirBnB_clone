@@ -15,4 +15,5 @@ body {
 .container {
     max-width: 1000px;
     margin: 30px auto;
+    padding-bottom: 60px;
 }
