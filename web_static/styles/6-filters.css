@@ -84,3 +84,7 @@
     padding: 0 10%;
     cursor: pointer;
 }
+
+.hover li:hover {
+    background-color: #DDDDDD;
+}
