@@ -24,8 +24,8 @@
     opacity: 90%;
 }
 
-.filters .locations,
-.filters .amenities {
+.filters .locations-filter,
+.filters .amenities-filter {
     height: 100%;
     width: 25%;
     padding: 0 4%;
@@ -35,18 +35,18 @@
     position: relative;
 }
 
-.filters .locations {
+.filters .locations-filter {
     border-right: 1px solid #DDDDDD;
 }
 
-.filters .locations h3,
-.filters .amenities h3 {
+.filters .locations-filter h3,
+.filters .amenities-filter h3 {
     font-weight: 600;
     margin: 0;
 }
 
-.filters .locations h4,
-.filters .amenities h4 {
+.filters .locations-filter h4,
+.filters .amenities-filter h4 {
     font-weight: 400;
     font-size: 14px;
     margin: 0;
@@ -70,8 +70,8 @@
     font-size: 16px;
 }
 
-.locations:hover .popover,
-.amenities:hover .popover {
+.locations-filter:hover .popover,
+.amenities-filter:hover .popover {
     display: block;
 }
 
