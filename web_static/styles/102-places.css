@@ -1,0 +1,151 @@
+.places {
+    margin-top: 20px;
+    display: block;
+}
+
+.places-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.places h1 {
+    font-size: 30px;
+    text-align: left;
+    margin-left: 2%;
+}
+
+.places article {
+    width: 390px;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #FF5A5F;
+    border-radius: 4px;
+}
+
+.places article>div {
+    margin: 3%;
+}
+
+.places .information {
+    margin-bottom: 5%;
+}
+
+.places article h2 {
+    font-size: 30px;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.places-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price_by_night {
+    color: #FF5A5F;
+    border: #FF5A5F solid 4px;
+    border-radius: 50%;
+    min-width: 60px;
+    height: 60px;
+    font-size: 30px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding: 8% 1.5%;
+}
+
+.information {
+    border-top: #DDDDDD solid 1px;
+    border-bottom: #DDDDDD solid 1px;
+    display: flex;
+    justify-content: space-evenly;
+    height: 80px;
+}
+
+.max_guest,
+.number_rooms,
+.number_bathrooms {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.icon-guest {
+    background-image: url("../images/icon_group.png");
+    background-repeat: no-repeat;
+    height: 60%;
+}
+
+.icon-bedroom {
+    background-image: url("../images/icon_bed.png");
+    background-repeat: no-repeat;
+    height: 60%;
+}
+
+.icon-bathroom {
+    background-image: url("../images/icon_bath.png");
+    background-repeat: no-repeat;
+    height: 60%;
+}
+
+.bold-text {
+    font-weight: 700;
+}
+
+.places .amenities,
+.places .reviews {
+    margin-top: 40px;
+}
+
+.places .amenities h2,
+.places .reviews h2 {
+    font-size: 16px;
+    border-bottom: #DDDDDD solid 1px;
+    text-align: left;
+    padding: 2% 0;
+}
+
+.places ul {
+    list-style-type: none;
+}
+
+.places .amenities ul li {
+    margin-bottom: 2%;
+}
+
+.places .reviews ul li {
+    margin-bottom: 5%;
+}
+
+.places .amenities ul li,
+.places .reviews ul li {
+    margin-top: 4%;
+}
+
+.places h3 {
+    font-size: 14px;
+    margin-bottom: 1%;
+}
+
+.icon-tv,
+.icon-pets,
+.icon-wifi {
+    background-repeat: no-repeat;
+    padding: 1.25%;
+    background-size: contain;
+    padding-left: 10%;
+}
+
+.icon-tv {
+    background-image: url("../images/icon_tv.png");
+}
+
+.icon-pets {
+    background-image: url("../images/icon_pets.png");
+}
+
+.icon-wifi {
+    background-image: url("../images/icon_wifi.png");
+}
