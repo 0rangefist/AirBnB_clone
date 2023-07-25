@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirBnB Clone</title>
+    <link rel="stylesheet" href="styles/4-common.css">
+    <link rel="stylesheet" href="styles/3-header.css">
+    <link rel="stylesheet" href="styles/3-footer.css">
+    <link rel="stylesheet" href="styles/6-filters.css">
+    <link rel="stylesheet" href="styles/101-places.css">
+    <link rel="icon" type="image/png" href="images/icon.png">
+</head>
+
+<body>
+    <header>
+        <div class="logo"></div>
+    </header>
+    <div class="container">
+        <section class="filters">
+            <div class="locations-filter">
+                <h3>States</h3>
+                <h4>California, Arizona...</h4>
+                <ul class="popover">
+                    <li>
+                        <h2>Arizona:</h2>
+                        <ul class="hover">
+                            <li>Phoenix</li>
+                            <li>Tucson</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h2>California:</h2>
+                        <ul class="hover">
+                            <li>San Fransico</li>
+                            <li>Los Angeles</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="amenities-filter">
+                <h3>Amenities</h3>
+                <h4>Pool, Wi-Fi...</h4>
+                <ul class="popover hover">
+                    <li>Wi-Fi</li>
+                    <li>TV</li>
+                    <li>Kitchen</li>
+                    <li>Iron</li>
+                </ul>
+            </div>
+            <button>Search</button>
+        </section>
+        <section class="places">
+            <h1>Places</h1>
+            <div class="places-list">
+                <article>
+                    <div class="places-heading">
+                        <h2>My Home</h2>
+                        <div class="price_by_night">$80</div>
+                    </div>
+                    <div class="information">
+                        <div class="max_guest">
+                            <div class="icon-guest"></div>
+                            <p>4 Guests</p>
+                        </div>
+                        <div class="number_rooms">
+                            <div class="icon-bedroom"></div>
+                            <p>2 Bedrooms</p>
+                        </div>
+                        <div class="number_bathrooms">
+                            <div class="icon-bathroom"></div>
+                            <p>1 Bathroom</p>
+                        </div>
+                    </div>
+                    <div class="user">
+                        <p><span class="bold-text">Owner:</span> George Lucas</p>
+                    </div>
+                    <div class="description">
+                        Discover your perfect retreat in this enchanting vacation home. Thoughtfully designed with
+                        modern amenities and a touch of warmth, it offers a cozy cottage ambiance nestled in nature.
+                        Unwind, make memories, and embrace the true essence of hospitality in
+                        this inviting space.
+                    </div>
+                    <div class="amenities">
+                        <h2>Amenities</h2>
+                        <ul>
+                            <li class="icon-tv">
+                                <p>TV</p>
+                            </li>
+                            <li class="icon-wifi">
+                                <p>Wi-Fi</p>
+                            </li>
+                            <li class="icon-pets">
+                                <p>Pet friendly</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="reviews">
+                        <h2>2 Reviews</h2>
+                        <ul>
+                            <li>
+                                <h3>Emily Johnson - 27 Mar 2023</h3>
+                                <p>What a delightful home! My family and I had a fantastic time here. The cottage was
+                                    beautifully decorated, and the amenities provided made our stay comfortable and
+                                    enjoyable. We can't wait to return!
+                                </p>
+                            </li>
+                            <li>
+                                <h3>Julia Song - 12 Dec 2022</h3>
+                                <p>The rooms are so well decorated and the home feels refreshing to stay in. The best
+                                    experiece ever!
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+                <article>
+                    <div class="places-heading">
+                        <h2>Tiny House</h2>
+                        <div class="price_by_night">$50</div>
+                    </div>
+                    <div class="information">
+                        <div class="max_guest">
+                            <div class="icon-guest"></div>
+                            <p>2 Guests</p>
+                        </div>
+                        <div class="number_rooms">
+                            <div class="icon-bedroom"></div>
+                            <p>1 Bedroom</p>
+                        </div>
+                        <div class="number_bathrooms">
+                            <div class="icon-bathroom"></div>
+                            <p>1 Bathroom</p>
+                        </div>
+                    </div>
+                    <div class="user">
+                        <p><span class="bold-text">Owner:</span> Spike Lee</p>
+                    </div>
+                    <div class="description">
+                        Step into a world of cozy simplicity in this charming tiny house. Thoughtfully designed, it
+                        redefines living large in a small space. Embrace the minimalistic allure, clever designs, and an
+                        eco-friendly retreat. Let your wanderlust lead you on an unforgettable adventure of downsizing
+                        without compromising comfort.
+                    </div>
+                    <div class="amenities">
+                        <h2>Amenities</h2>
+                        <ul>
+                            <li class="icon-tv">
+                                <p>TV</p>
+                            </li>
+                            <li class="icon-pets">
+                                <p>Pet friendly</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="reviews">
+                        <h2>1 Review</h2>
+                        <ul>
+                            <li>
+                                <h3>David Smith - 16 July 2023</h3>
+                                <p>A tiny house, but big on charm! This little gem exceeded my expectations. The clever
+                                    use of space, eco-friendly features, and the feeling of being close to nature made
+                                    it a memorable stay. The hosts were incredibly accommodating, and I left feeling
+                                    refreshed and inspired. Highly recommended!
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+                <article>
+                    <div class="places-heading">
+                        <h2>A Suite</h2>
+                        <div class="price_by_night">$150</div>
+                    </div>
+                    <div class="information">
+                        <div class="max_guest">
+                            <div class="icon-guest"></div>
+                            <p>2 Guests</p>
+                        </div>
+                        <div class="number_rooms">
+                            <div class="icon-bedroom"></div>
+                            <p>1 Bedroom</p>
+                        </div>
+                        <div class="number_bathrooms">
+                            <div class="icon-bathroom"></div>
+                            <p>1 Bathroom</p>
+                        </div>
+                    </div>
+                    <div class="user">
+                        <p><span class="bold-text">Owner:</span> Steven Spielberg</p>
+                    </div>
+                    <div class="description">
+                        Indulge in luxury with this opulent suite. Elegance awaits with spacious living areas, lavish
+                        furnishings, and breathtaking views. Find serenity and personalized service, creating an
+                        unrivaled stay of sophistication. Experience pure indulgence and make unforgettable memories in
+                        this lavish suite.
+                    </div>
+                    <div class="amenities">
+                        <h2>Amenities</h2>
+                        <ul>
+                            <li class="icon-tv">
+                                <p>TV</p>
+                            </li>
+                            <li class="icon-wifi">
+                                <p>Wi-Fi</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="reviews">
+                        <h2>2 Reviews</h2>
+                        <ul>
+                            <li>
+                                <h3>Michael Roberts - 12 May 2023</h3>
+                                <p>A suite fit for royalty! I was blown away by the luxurious accommodations and
+                                    impeccable service. The spacious living area and stunning city views added to the
+                                    overall opulence. Every aspect of my stay was flawlessly managed. I will cherish the
+                                    memories made during my time here.
+                                </p>
+                            </li>
+                            <li>
+                                <h3>Laura Musiango - 20 Nov 2022</h3>
+                                <p>The suite surpassed all expectations. The attention to detail in
+                                    the design and decor was truly remarkable. The attentive staff made me feel like a
+                                    VIP throughout my stay. I can't imagine a more luxurious and indulgent experience. A
+                                    true 5-star stay!
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <span>Best School</span>
+    </footer>
+</body>
+
+</html>
